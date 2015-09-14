@@ -21,7 +21,7 @@
 #ifndef PHP_DTSP_H
 #define PHP_DTSP_H
 
-#include "lib/dtsp.h"
+#include "lib/src/dtsp.h"
 
 extern zend_module_entry dtsp_module_entry;
 #define phpext_dtsp_ptr &dtsp_module_entry

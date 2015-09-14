@@ -59,7 +59,8 @@ if test "$PHP_DTSP" != "no"; then
   dnl
   dnl PHP_SUBST(DTSP_SHARED_LIBADD)
 
-  PHP_NEW_EXTENSION(dtsp, dtsp.c lib/dtsp.c lib/dtsp/aes.c lib/dtsp/crc32.c lib/dtsp/isaac.c lib/dtsp/md5.c lib/dtsp/tsearch.c, $ext_shared)
-  PHP_ADD_BUILD_DIR($ext_builddir/lib, 1)
-  PHP_ADD_INCLUDE([$ext_srcdir/lib])
+  PHP_NEW_EXTENSION(dtsp, dtsp.c lib/src/dtsp.c lib/src/dtsp/aes.c lib/src/dtsp/crc32.c lib/src/dtsp/isaac.c lib/src/dtsp/md5.c lib/src/dtsp/tsearch.c, $ext_shared)
+
+  PHP_ADD_BUILD_DIR($ext_builddir/lib/src, 1)
+  PHP_ADD_INCLUDE([$ext_srcdir/lib/src])
 fi

@@ -32,8 +32,9 @@ ZEND_DECLARE_MODULE_GLOBALS(dtsp)
 
 /* {{{ PHP_INI */
 PHP_INI_BEGIN()
-PHP_INI_ENTRY("dtsp.seed",    "", PHP_INI_SYSTEM, NULL)
+PHP_INI_ENTRY("dtsp.seed", "", PHP_INI_SYSTEM, NULL)
 PHP_INI_ENTRY("dtsp.udid", "PHP", PHP_INI_SYSTEM, NULL)
+PHP_INI_ENTRY("dtsp.timeout", "15", PHP_INI_SYSTEM, NULL)
 PHP_INI_END()
 /* }}} */
 
@@ -47,7 +48,7 @@ PHP_FUNCTION(dtsp_encrypt) {
         return;
 
     out = (uint8_t *) emalloc(n + DTSP_PADDING + 1);
-    len = dtsp_encrypt_bytes(&DTSP_G(ctx), out, in, n);
+    len = dtsp_encrypt(&DTSP_G(ctx), out, in, n);
     out[len] = '\0';
 
     RETURN_STRINGL(out, len, 0);
@@ -65,7 +66,7 @@ PHP_FUNCTION(dtsp_decrypt) {
         return;
 
     out = (uint8_t *) emalloc(n + 1);
-    len = dtsp_decrypt_bytes(&DTSP_G(ctx), out, in, n);
+    len = dtsp_decrypt(&DTSP_G(ctx), out, in, n);
     switch (len) {
         case DTSP_STATUS_NODATA:
             php_error(E_WARNING, "dtsp_decrypt: no data to decrypt");
@@ -89,14 +90,7 @@ PHP_FUNCTION(dtsp_decrypt) {
 
 /* {{{ php_dtsp_init_globals */
 static void php_dtsp_init_globals(zend_dtsp_globals *dtsp_globals) {
-    dtsp_buf_t seed, udid;
-
-    seed.buf = INI_STR("dtsp.seed");
-    seed.n = strlen(seed.buf);
-    udid.buf = INI_STR("dtsp.udid");
-    udid.n = strlen(udid.buf);
-
-    dtsp_init(&dtsp_globals->ctx, &seed, &udid);
+    dtsp_init(&dtsp_globals->ctx, INI_STR("dtsp.seed"), INI_STR("dtsp.udid"), atoi(INI_STR("dtsp.timeout")));
 }
 /* }}} */
 
@@ -104,6 +98,7 @@ static void php_dtsp_init_globals(zend_dtsp_globals *dtsp_globals) {
 PHP_MINIT_FUNCTION(dtsp) {
     REGISTER_INI_ENTRIES();
 
+    REGISTER_LONG_CONSTANT("DTSP_TIMEOUT", DTSP_TIMEOUT, CONST_CS|CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("DTSP_STATUS_NODATA", DTSP_STATUS_NODATA, CONST_CS|CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("DTSP_STATUS_BADHEADER", DTSP_STATUS_BADHEADER, CONST_CS|CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("DTSP_STATUS_DUPLICATE", DTSP_STATUS_DUPLICATE, CONST_CS|CONST_PERSISTENT);

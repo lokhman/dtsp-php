@@ -2,16 +2,6 @@
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
-      <df name="lib">
-        <df name="dtsp">
-          <in>aes.c</in>
-          <in>crc32.c</in>
-          <in>isaac.c</in>
-          <in>md5.c</in>
-          <in>tsearch.c</in>
-        </df>
-        <in>dtsp.c</in>
-      </df>
       <in>dtsp.c</in>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -50,30 +40,6 @@
             <pElem></pElem>
           </incDir>
         </cTool>
-      </item>
-      <folder path="0/lib/dtsp">
-        <cTool>
-          <incDir>
-            <pElem>lib/dtsp</pElem>
-          </incDir>
-        </cTool>
-      </folder>
-      <item path="lib/dtsp.c" ex="false" tool="0" flavor2="2">
-        <cTool>
-          <incDir>
-            <pElem>lib</pElem>
-          </incDir>
-        </cTool>
-      </item>
-      <item path="lib/dtsp/aes.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="lib/dtsp/crc32.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="lib/dtsp/isaac.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="lib/dtsp/md5.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="lib/dtsp/tsearch.c" ex="false" tool="0" flavor2="2">
       </item>
     </conf>
   </confs>
