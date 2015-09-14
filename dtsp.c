@@ -124,17 +124,27 @@ PHP_MSHUTDOWN_FUNCTION(dtsp) {
 /* {{{ PHP_MINFO_FUNCTION */
 PHP_MINFO_FUNCTION(dtsp) {
     php_info_print_table_start();
-    php_info_print_table_header(2, "DTSP support", "enabled");
+    php_info_print_table_header(2, "DTSP Support", "enabled");
+    php_info_print_table_row(2, "Version", PHP_DTSP_VERSION);
+    php_info_print_table_row(2, "Protocol", DTSP_VERSION);
     php_info_print_table_end();
 
     DISPLAY_INI_ENTRIES();
 }
 /* }}} */
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_dtsp_encrypt, 0, 0, 1)
+ZEND_ARG_INFO(0, data)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_dtsp_decrypt, 0, 0, 1)
+ZEND_ARG_INFO(0, data)
+ZEND_END_ARG_INFO()
+
 /* {{{ dtsp_functions[] */
 const zend_function_entry dtsp_functions[] = {
-    PHP_FE(dtsp_encrypt, NULL)
-    PHP_FE(dtsp_decrypt, NULL)
+    PHP_FE(dtsp_encrypt, arginfo_dtsp_encrypt)
+    PHP_FE(dtsp_decrypt, arginfo_dtsp_decrypt)
     PHP_FE_END
 };
 /* }}} */
